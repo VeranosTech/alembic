@@ -1,0 +1,157 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>서문 &#8212; Alembic 1.0.8 documentation</title>
+    <link rel="stylesheet" href="_static/nature_override.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/changelog.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_paramlinks.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="튜토리얼" href="tutorial.html" />
+    <link rel="prev" title="알렘빅 문서" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="튜토리얼"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="알렘빅 문서"
+             accesskey="P">이전</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Alembic 1.0.8 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="front-matter">
+<h1>서문<a class="headerlink" href="#front-matter" title="제목 주소">¶</a></h1>
+<p>Alembic 프로젝트에 대한 정보.</p>
+<div class="section" id="project-homepage">
+<h2>프로젝트 홈페이지<a class="headerlink" href="#project-homepage" title="제목 주소">¶</a></h2>
+<p>Alembic은 SQLAlchemy 조직 아래의 GitHub <a class="reference external" href="https://github.com/sqlalchemy">https://github.com/sqlalchemy</a>/alembic에서 호스팅되고 있다.</p>
+<p>릴리즈와 프로젝트 상태는 Pypi 사이트 <a class="reference external" href="https://pypi.python.org/pypi">https://pypi.python.org/pypi</a>/alembic에서 볼 수 있다.</p>
+<p>이 문서의 가장 최근 작성된 버전은 <a class="reference external" href="https://alembic.sqlalchemy">https://alembic.sqlalchemy</a>.org에 있다.</p>
+</div>
+<div class="section" id="installation">
+<span id="id1"></span><h2>설치<a class="headerlink" href="#installation" title="제목 주소">¶</a></h2>
+<p>파이썬 패키지 인덱스 <a class="reference external" href="http://pypi.python.org/pypi/pip">pip</a>또는 비슷한 도구로 릴리즈 버전의 Alembic을 설치한다:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">alembic</span>
+</pre></div>
+</div>
+<p>소스코드 배포를 통한 설치는 <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> 스크립트를 이용한다:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>설치가 되면 환경에 <code class="docutils literal notranslate"><span class="pre">alembic</span></code> 명령이 추가될 것이다.  Alembic을 이용한 모든 작동은 이 명령어의 사용을 통해 진행된다.</p>
+<div class="section" id="dependencies">
+<h3>의존성<a class="headerlink" href="#dependencies" title="제목 주소">¶</a></h3>
+<p>Alembic의 설치 프로세스는 <a class="reference external" href="https://www.sqlalchemy.org">SQLAlchemy</a>가 다른 의존 패키지들과 함께 설치되어 있는지 확실히 한다.  Alembic은 <strong>0.9.0</strong>버전의 SQLAlchemy와 함께 동작하지만, 더 많은 기능들은 1.1이나 1.2 시리즈와 같은 최신 버전이 있어야 사용 가능하다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified">버전 1.0.0으로 변경: </span>SQLAlchemy 버전 0.8 그리고 0.7.9 버전의 지원은 중단되었다.</p>
+</div>
+<p>Alembic은 파이썬 버전 2.7과 3.4 이상을 지원한다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified">버전 1.0.0으로 변경: </span>파이썬 버전 2.6과 3.3의 지원은 중단되었다.</p>
+</div>
+</div>
+</div>
+<div class="section" id="community">
+<h2>커뮤니티<a class="headerlink" href="#community" title="제목 주소">¶</a></h2>
+<p>Alembic은 <a class="reference external" href="http://techspot.zzzeek.org">Mike Bayer</a>에 의해 개발되었고, <a class="reference external" href="https://www.sqlalchemy.org">SQLAlchemy</a>, <a class="reference external" href="http://www.pylonsproject.org">Pylons</a>, 그리고 <a class="reference external" href="http://www.openstack.org">Openstack</a> 프로젝트와 약하게 연관되어 있다.</p>
+<p>사용자 이슈, 잠재적 버그나 기능에 대한 토론은 Alembic 구글 그룹인 <a class="reference external" href="https://groups.google.com/group/sqlalchemy-alembic">sqlalchemy-alembic</a>에 게시하면 된다.</p>
+</div>
+<div class="section" id="bugs">
+<span id="id2"></span><h2>버그<a class="headerlink" href="#bugs" title="제목 주소">¶</a></h2>
+<p>Alembic의 버그와 기능의 확장은 <a class="reference external" href="https://github.com/sqlalchemy/alembic/issues/">GitHub issue tracker</a>에 보고된다.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">서문</a><ul>
+<li><a class="reference internal" href="#project-homepage">프로젝트 홈페이지</a></li>
+<li><a class="reference internal" href="#installation">설치</a><ul>
+<li><a class="reference internal" href="#dependencies">의존성</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#community">커뮤니티</a></li>
+<li><a class="reference internal" href="#bugs">버그</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>빠른 검색</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="바로 가기" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="index.html"
+                        title="이전 장">알렘빅 문서</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="tutorial.html"
+                        title="다음 장">튜토리얼</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="튜토리얼"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="알렘빅 문서"
+             >이전</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Alembic 1.0.8 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2010-2019, Mike Bayer.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

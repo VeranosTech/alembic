@@ -17,3 +17,5 @@ coverage.xml
 
 .idea/
 *.mo
+!/docs/build/output/
+!/build/

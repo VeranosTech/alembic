@@ -1,0 +1,581 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Script Directory &#8212; Alembic 1.0.8 documentation</title>
+    <link rel="stylesheet" href="../_static/nature_override.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/changelog.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_paramlinks.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="next" title="DDL Internals" href="ddl.html" />
+    <link rel="prev" title="Autogeneration" href="autogenerate.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="ddl.html" title="DDL Internals"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="autogenerate.html" title="Autogeneration"
+             accesskey="P">이전</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alembic 1.0.8 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">API Details</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="script-directory">
+<span id="alembic-script-toplevel"></span><h1>Script Directory<a class="headerlink" href="#script-directory" title="제목 주소">¶</a></h1>
+<p>The <a class="reference internal" href="#alembic.script.ScriptDirectory" title="alembic.script.ScriptDirectory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScriptDirectory</span></code></a> object provides programmatic access
+to the Alembic version files present in the filesystem.</p>
+<span class="target" id="module-alembic.script"></span><dl class="class">
+<dt id="alembic.script.ScriptDirectory">
+<em class="property">class </em><code class="descclassname">alembic.script.</code><code class="descname">ScriptDirectory</code><span class="sig-paren">(</span><em>dir</em>, <em>file_template='%(rev)s_%(slug)s'</em>, <em>truncate_slug_length=40</em>, <em>version_locations=None</em>, <em>sourceless=False</em>, <em>output_encoding='utf-8'</em>, <em>timezone=None</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory" title="정의 주소">¶</a></dt>
+<dd><p>Provides operations upon an Alembic script directory.</p>
+<p>This object is useful to get information as to current revisions,
+most notably being able to get at the &quot;head&quot; revision, for schemes
+that want to test if the current revision in the database is the most
+recent:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">alembic.script</span> <span class="k">import</span> <span class="n">ScriptDirectory</span>
+<span class="kn">from</span> <span class="nn">alembic.config</span> <span class="k">import</span> <span class="n">Config</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">set_main_option</span><span class="p">(</span><span class="s2">&quot;script_location&quot;</span><span class="p">,</span> <span class="s2">&quot;myapp:migrations&quot;</span><span class="p">)</span>
+<span class="n">script</span> <span class="o">=</span> <span class="n">ScriptDirectory</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="n">head_revision</span> <span class="o">=</span> <span class="n">script</span><span class="o">.</span><span class="n">get_current_head</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="alembic.script.ScriptDirectory.as_revision_number">
+<code class="descname">as_revision_number</code><span class="sig-paren">(</span><em>id_</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.as_revision_number" title="정의 주소">¶</a></dt>
+<dd><p>Convert a symbolic revision, i.e. 'head' or 'base', into
+an actual revision number.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="alembic.script.ScriptDirectory.from_config">
+<em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.from_config" title="정의 주소">¶</a></dt>
+<dd><p>Produce a new <a class="reference internal" href="#alembic.script.ScriptDirectory" title="alembic.script.ScriptDirectory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScriptDirectory</span></code></a> given a <a class="reference internal" href="config.html#alembic.config.Config" title="alembic.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a>
+instance.</p>
+<p>The <a class="reference internal" href="config.html#alembic.config.Config" title="alembic.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a> need only have the <code class="docutils literal notranslate"><span class="pre">script_location</span></code> key
+present.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.ScriptDirectory.generate_revision">
+<code class="descname">generate_revision</code><span class="sig-paren">(</span><em>revid</em>, <em>message</em>, <em>head=None</em>, <em>refresh=False</em>, <em>splice=False</em>, <em>branch_labels=None</em>, <em>version_path=None</em>, <em>depends_on=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.generate_revision" title="정의 주소">¶</a></dt>
+<dd><p>Generate a new revision file.</p>
+<p>This runs the <code class="docutils literal notranslate"><span class="pre">script.py.mako</span></code> template, given
+template arguments, and creates a new file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">매개 변수:</th><td class="field-body"><ul class="first last simple">
+<li><span class="target" id="alembic.script.ScriptDirectory.generate_revision.params.revid"></span><strong>revid</strong><a class="paramlink headerlink reference internal" href="#alembic.script.ScriptDirectory.generate_revision.params.revid">¶</a> -- String revision id.  Typically this
+comes from <code class="docutils literal notranslate"><span class="pre">alembic.util.rev_id()</span></code>.</li>
+<li><span class="target" id="alembic.script.ScriptDirectory.generate_revision.params.message"></span><strong>message</strong><a class="paramlink headerlink reference internal" href="#alembic.script.ScriptDirectory.generate_revision.params.message">¶</a> -- the revision message, the one passed
+by the -m argument to the <code class="docutils literal notranslate"><span class="pre">revision</span></code> command.</li>
+<li><span class="target" id="alembic.script.ScriptDirectory.generate_revision.params.head"></span><strong>head</strong><a class="paramlink headerlink reference internal" href="#alembic.script.ScriptDirectory.generate_revision.params.head">¶</a> -- <p>the head revision to generate against.  Defaults
+to the current &quot;head&quot; if no branches are present, else raises
+an exception.</p>
+<div class="versionadded">
+<p><span class="versionmodified">버전 0.7.0에 추가.</span></p>
+</div>
+</li>
+<li><span class="target" id="alembic.script.ScriptDirectory.generate_revision.params.splice"></span><strong>splice</strong><a class="paramlink headerlink reference internal" href="#alembic.script.ScriptDirectory.generate_revision.params.splice">¶</a> -- if True, allow the &quot;head&quot; version to not be an
+actual head; otherwise, the selected head must be a head
+(e.g. endpoint) revision.</li>
+<li><span class="target" id="alembic.script.ScriptDirectory.generate_revision.params.refresh"></span><strong>refresh</strong><a class="paramlink headerlink reference internal" href="#alembic.script.ScriptDirectory.generate_revision.params.refresh">¶</a> -- deprecated.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.ScriptDirectory.get_base">
+<code class="descname">get_base</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.get_base" title="정의 주소">¶</a></dt>
+<dd><p>Return the &quot;base&quot; revision as a string.</p>
+<p>This is the revision number of the script that
+has a <code class="docutils literal notranslate"><span class="pre">down_revision</span></code> of None.</p>
+<p>If the script directory has multiple bases, an error is raised;
+<a class="reference internal" href="#alembic.script.ScriptDirectory.get_bases" title="alembic.script.ScriptDirectory.get_bases"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ScriptDirectory.get_bases()</span></code></a> should be
+preferred.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.ScriptDirectory.get_bases">
+<code class="descname">get_bases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.get_bases" title="정의 주소">¶</a></dt>
+<dd><p>return all &quot;base&quot; revisions as strings.</p>
+<p>This is the revision number of all scripts that
+have a <code class="docutils literal notranslate"><span class="pre">down_revision</span></code> of None.</p>
+<div class="versionadded">
+<p><span class="versionmodified">버전 0.7.0에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.ScriptDirectory.get_current_head">
+<code class="descname">get_current_head</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.get_current_head" title="정의 주소">¶</a></dt>
+<dd><p>Return the current head revision.</p>
+<p>If the script directory has multiple heads
+due to branching, an error is raised;
+<a class="reference internal" href="#alembic.script.ScriptDirectory.get_heads" title="alembic.script.ScriptDirectory.get_heads"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ScriptDirectory.get_heads()</span></code></a> should be
+preferred.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">반환:</th><td class="field-body">a string revision number.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">더 보기</p>
+<p class="last"><a class="reference internal" href="#alembic.script.ScriptDirectory.get_heads" title="alembic.script.ScriptDirectory.get_heads"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ScriptDirectory.get_heads()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.ScriptDirectory.get_heads">
+<code class="descname">get_heads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.get_heads" title="정의 주소">¶</a></dt>
+<dd><p>Return all &quot;versioned head&quot; revisions as strings.</p>
+<p>This is normally a list of length one,
+unless branches are present.  The
+<a class="reference internal" href="#alembic.script.ScriptDirectory.get_current_head" title="alembic.script.ScriptDirectory.get_current_head"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ScriptDirectory.get_current_head()</span></code></a> method
+can be used normally when a script directory
+has only one head.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">반환:</th><td class="field-body">a tuple of string revision numbers.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.ScriptDirectory.get_revision">
+<code class="descname">get_revision</code><span class="sig-paren">(</span><em>id_</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.get_revision" title="정의 주소">¶</a></dt>
+<dd><p>Return the <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> instance with the given rev id.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">더 보기</p>
+<p class="last"><a class="reference internal" href="#alembic.script.ScriptDirectory.get_revisions" title="alembic.script.ScriptDirectory.get_revisions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ScriptDirectory.get_revisions()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.ScriptDirectory.get_revisions">
+<code class="descname">get_revisions</code><span class="sig-paren">(</span><em>id_</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.get_revisions" title="정의 주소">¶</a></dt>
+<dd><p>Return the <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> instance with the given rev identifier,
+symbolic name, or sequence of identifiers.</p>
+<div class="versionadded">
+<p><span class="versionmodified">버전 0.7.0에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.ScriptDirectory.iterate_revisions">
+<code class="descname">iterate_revisions</code><span class="sig-paren">(</span><em>upper</em>, <em>lower</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.iterate_revisions" title="정의 주소">¶</a></dt>
+<dd><p>Iterate through script revisions, starting at the given
+upper revision identifier and ending at the lower.</p>
+<p>The traversal uses strictly the <cite>down_revision</cite>
+marker inside each migration script, so
+it is a requirement that upper &gt;= lower,
+else you'll get nothing back.</p>
+<p>The iterator yields <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> objects.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">더 보기</p>
+<p class="last"><a class="reference internal" href="#alembic.script.revision.RevisionMap.iterate_revisions" title="alembic.script.revision.RevisionMap.iterate_revisions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RevisionMap.iterate_revisions()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.ScriptDirectory.run_env">
+<code class="descname">run_env</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.run_env" title="정의 주소">¶</a></dt>
+<dd><p>Run the script environment.</p>
+<p>This basically runs the <code class="docutils literal notranslate"><span class="pre">env.py</span></code> script present
+in the migration environment.   It is called exclusively
+by the command functions in <a class="reference internal" href="commands.html#module-alembic.command" title="alembic.command"><code class="xref py py-mod docutils literal notranslate"><span class="pre">alembic.command</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.ScriptDirectory.walk_revisions">
+<code class="descname">walk_revisions</code><span class="sig-paren">(</span><em>base='base'</em>, <em>head='heads'</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.ScriptDirectory.walk_revisions" title="정의 주소">¶</a></dt>
+<dd><p>Iterate through all revisions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">매개 변수:</th><td class="field-body"><ul class="first last simple">
+<li><span class="target" id="alembic.script.ScriptDirectory.walk_revisions.params.base"></span><strong>base</strong><a class="paramlink headerlink reference internal" href="#alembic.script.ScriptDirectory.walk_revisions.params.base">¶</a> -- the base revision, or &quot;base&quot; to start from the
+empty revision.</li>
+<li><span class="target" id="alembic.script.ScriptDirectory.walk_revisions.params.head"></span><strong>head</strong><a class="paramlink headerlink reference internal" href="#alembic.script.ScriptDirectory.walk_revisions.params.head">¶</a> -- <p>the head revision; defaults to &quot;heads&quot; to indicate
+all head revisions.  May also be &quot;head&quot; to indicate a single
+head revision.</p>
+<div class="versionchanged">
+<p><span class="versionmodified">버전 0.7.0으로 변경: </span>the &quot;head&quot; identifier now refers to
+the head of a non-branched repository only; use &quot;heads&quot; to
+refer to the set of all head branches simultaneously.</p>
+</div>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="alembic.script.Script">
+<em class="property">class </em><code class="descclassname">alembic.script.</code><code class="descname">Script</code><span class="sig-paren">(</span><em>module</em>, <em>rev_id</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.Script" title="정의 주소">¶</a></dt>
+<dd><p>Represent a single revision file in a <code class="docutils literal notranslate"><span class="pre">versions/</span></code> directory.</p>
+<p>The <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> instance is returned by methods
+such as <a class="reference internal" href="#alembic.script.ScriptDirectory.iterate_revisions" title="alembic.script.ScriptDirectory.iterate_revisions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ScriptDirectory.iterate_revisions()</span></code></a>.</p>
+<dl class="attribute">
+<dt id="alembic.script.Script.doc">
+<code class="descname">doc</code><a class="headerlink" href="#alembic.script.Script.doc" title="정의 주소">¶</a></dt>
+<dd><p>Return the docstring given in the script.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.Script.longdoc">
+<code class="descname">longdoc</code><a class="headerlink" href="#alembic.script.Script.longdoc" title="정의 주소">¶</a></dt>
+<dd><p>Return the docstring given in the script.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.Script.module">
+<code class="descname">module</code><em class="property"> = None</em><a class="headerlink" href="#alembic.script.Script.module" title="정의 주소">¶</a></dt>
+<dd><p>The Python module representing the actual script itself.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.Script.path">
+<code class="descname">path</code><em class="property"> = None</em><a class="headerlink" href="#alembic.script.Script.path" title="정의 주소">¶</a></dt>
+<dd><p>Filesystem path of the script.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="revision">
+<h2>Revision<a class="headerlink" href="#revision" title="제목 주소">¶</a></h2>
+<p>The <a class="reference internal" href="#alembic.script.revision.RevisionMap" title="alembic.script.revision.RevisionMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">RevisionMap</span></code></a> object serves as the basis for revision
+management, used exclusively by <a class="reference internal" href="#alembic.script.ScriptDirectory" title="alembic.script.ScriptDirectory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScriptDirectory</span></code></a>.</p>
+<span class="target" id="module-alembic.script.revision"></span><dl class="exception">
+<dt id="alembic.script.revision.MultipleHeads">
+<em class="property">exception </em><code class="descclassname">alembic.script.revision.</code><code class="descname">MultipleHeads</code><span class="sig-paren">(</span><em>heads</em>, <em>argument</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.revision.MultipleHeads" title="정의 주소">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="alembic.script.revision.RangeNotAncestorError">
+<em class="property">exception </em><code class="descclassname">alembic.script.revision.</code><code class="descname">RangeNotAncestorError</code><span class="sig-paren">(</span><em>lower</em>, <em>upper</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.revision.RangeNotAncestorError" title="정의 주소">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="alembic.script.revision.ResolutionError">
+<em class="property">exception </em><code class="descclassname">alembic.script.revision.</code><code class="descname">ResolutionError</code><span class="sig-paren">(</span><em>message</em>, <em>argument</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.revision.ResolutionError" title="정의 주소">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="alembic.script.revision.Revision">
+<em class="property">class </em><code class="descclassname">alembic.script.revision.</code><code class="descname">Revision</code><span class="sig-paren">(</span><em>revision</em>, <em>down_revision</em>, <em>dependencies=None</em>, <em>branch_labels=None</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.revision.Revision" title="정의 주소">¶</a></dt>
+<dd><p>Base class for revisioned objects.</p>
+<p>The <a class="reference internal" href="#alembic.script.revision.Revision" title="alembic.script.revision.Revision"><code class="xref py py-class docutils literal notranslate"><span class="pre">Revision</span></code></a> class is the base of the more public-facing
+<a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> object, which represents a migration script.
+The mechanics of revision management and traversal are encapsulated
+within <a class="reference internal" href="#alembic.script.revision.Revision" title="alembic.script.revision.Revision"><code class="xref py py-class docutils literal notranslate"><span class="pre">Revision</span></code></a>, while <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> applies this logic
+to Python files in a version directory.</p>
+<dl class="attribute">
+<dt id="alembic.script.revision.Revision.branch_labels">
+<code class="descname">branch_labels</code><em class="property"> = None</em><a class="headerlink" href="#alembic.script.revision.Revision.branch_labels" title="정의 주소">¶</a></dt>
+<dd><p>Optional string/tuple of symbolic names to apply to this
+revision's branch</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.revision.Revision.dependencies">
+<code class="descname">dependencies</code><em class="property"> = None</em><a class="headerlink" href="#alembic.script.revision.Revision.dependencies" title="정의 주소">¶</a></dt>
+<dd><p>Additional revisions which this revision is dependent on.</p>
+<p>From a migration standpoint, these dependencies are added to the
+down_revision to form the full iteration.  However, the separation
+of down_revision from &quot;dependencies&quot; is to assist in navigating
+a history that contains many branches, typically a multi-root scenario.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.revision.Revision.down_revision">
+<code class="descname">down_revision</code><em class="property"> = None</em><a class="headerlink" href="#alembic.script.revision.Revision.down_revision" title="정의 주소">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">down_revision</span></code> identifier(s) within the migration script.</p>
+<p>Note that the total set of &quot;down&quot; revisions is
+down_revision + dependencies.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.revision.Revision.is_base">
+<code class="descname">is_base</code><a class="headerlink" href="#alembic.script.revision.Revision.is_base" title="정의 주소">¶</a></dt>
+<dd><p>Return True if this <a class="reference internal" href="#alembic.script.revision.Revision" title="alembic.script.revision.Revision"><code class="xref py py-class docutils literal notranslate"><span class="pre">Revision</span></code></a> is a 'base' revision.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.revision.Revision.is_branch_point">
+<code class="descname">is_branch_point</code><a class="headerlink" href="#alembic.script.revision.Revision.is_branch_point" title="정의 주소">¶</a></dt>
+<dd><p>Return True if this <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> is a branch point.</p>
+<p>A branchpoint is defined as a <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> which is referred
+to by more than one succeeding <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a>, that is more
+than one <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> has a <cite>down_revision</cite> identifier pointing
+here.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.revision.Revision.is_head">
+<code class="descname">is_head</code><a class="headerlink" href="#alembic.script.revision.Revision.is_head" title="정의 주소">¶</a></dt>
+<dd><p>Return True if this <a class="reference internal" href="#alembic.script.revision.Revision" title="alembic.script.revision.Revision"><code class="xref py py-class docutils literal notranslate"><span class="pre">Revision</span></code></a> is a 'head' revision.</p>
+<p>This is determined based on whether any other <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a>
+within the <a class="reference internal" href="#alembic.script.ScriptDirectory" title="alembic.script.ScriptDirectory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScriptDirectory</span></code></a> refers to this
+<a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a>.   Multiple heads can be present.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.revision.Revision.is_merge_point">
+<code class="descname">is_merge_point</code><a class="headerlink" href="#alembic.script.revision.Revision.is_merge_point" title="정의 주소">¶</a></dt>
+<dd><p>Return True if this <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> is a merge point.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.revision.Revision.nextrev">
+<code class="descname">nextrev</code><em class="property"> = frozenset()</em><a class="headerlink" href="#alembic.script.revision.Revision.nextrev" title="정의 주소">¶</a></dt>
+<dd><p>following revisions, based on down_revision only.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.revision.Revision.revision">
+<code class="descname">revision</code><em class="property"> = None</em><a class="headerlink" href="#alembic.script.revision.Revision.revision" title="정의 주소">¶</a></dt>
+<dd><p>The string revision number.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="alembic.script.revision.RevisionError">
+<em class="property">exception </em><code class="descclassname">alembic.script.revision.</code><code class="descname">RevisionError</code><a class="headerlink" href="#alembic.script.revision.RevisionError" title="정의 주소">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="alembic.script.revision.RevisionMap">
+<em class="property">class </em><code class="descclassname">alembic.script.revision.</code><code class="descname">RevisionMap</code><span class="sig-paren">(</span><em>generator</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.revision.RevisionMap" title="정의 주소">¶</a></dt>
+<dd><p>Maintains a map of <a class="reference internal" href="#alembic.script.revision.Revision" title="alembic.script.revision.Revision"><code class="xref py py-class docutils literal notranslate"><span class="pre">Revision</span></code></a> objects.</p>
+<p><a class="reference internal" href="#alembic.script.revision.RevisionMap" title="alembic.script.revision.RevisionMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">RevisionMap</span></code></a> is used by <a class="reference internal" href="#alembic.script.ScriptDirectory" title="alembic.script.ScriptDirectory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScriptDirectory</span></code></a> to maintain
+and traverse the collection of <a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> objects, which are
+themselves instances of <a class="reference internal" href="#alembic.script.revision.Revision" title="alembic.script.revision.Revision"><code class="xref py py-class docutils literal notranslate"><span class="pre">Revision</span></code></a>.</p>
+<p>Construct a new <a class="reference internal" href="#alembic.script.revision.RevisionMap" title="alembic.script.revision.RevisionMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">RevisionMap</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">매개 변수:</th><td class="field-body"><span class="target" id="alembic.script.revision.RevisionMap.params.generator"></span><strong>generator</strong><a class="paramlink headerlink reference internal" href="#alembic.script.revision.RevisionMap.params.generator">¶</a> -- a zero-arg callable that will generate an iterable
+of <a class="reference internal" href="#alembic.script.revision.Revision" title="alembic.script.revision.Revision"><code class="xref py py-class docutils literal notranslate"><span class="pre">Revision</span></code></a> instances to be used.   These are typically
+<a class="reference internal" href="#alembic.script.Script" title="alembic.script.Script"><code class="xref py py-class docutils literal notranslate"><span class="pre">Script</span></code></a> subclasses within regular Alembic use.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="alembic.script.revision.RevisionMap.add_revision">
+<code class="descname">add_revision</code><span class="sig-paren">(</span><em>revision</em>, <em>_replace=False</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.revision.RevisionMap.add_revision" title="정의 주소">¶</a></dt>
+<dd><p>add a single revision to an existing map.</p>
+<p>This method is for single-revision use cases, it's not
+appropriate for fully populating an entire revision map.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.revision.RevisionMap.bases">
+<code class="descname">bases</code><a class="headerlink" href="#alembic.script.revision.RevisionMap.bases" title="정의 주소">¶</a></dt>
+<dd><p>All &quot;base&quot; revisions as strings.</p>
+<p>These are revisions that have a <code class="docutils literal notranslate"><span class="pre">down_revision</span></code> of None,
+or empty tuple.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">반환:</th><td class="field-body">a tuple of string revision numbers.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.revision.RevisionMap.get_current_head">
+<code class="descname">get_current_head</code><span class="sig-paren">(</span><em>branch_label=None</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.revision.RevisionMap.get_current_head" title="정의 주소">¶</a></dt>
+<dd><p>Return the current head revision.</p>
+<p>If the script directory has multiple heads
+due to branching, an error is raised;
+<a class="reference internal" href="#alembic.script.ScriptDirectory.get_heads" title="alembic.script.ScriptDirectory.get_heads"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ScriptDirectory.get_heads()</span></code></a> should be
+preferred.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">매개 변수:</th><td class="field-body"><span class="target" id="alembic.script.revision.RevisionMap.get_current_head.params.branch_label"></span><strong>branch_label</strong><a class="paramlink headerlink reference internal" href="#alembic.script.revision.RevisionMap.get_current_head.params.branch_label">¶</a> -- optional branch name which will limit the
+heads considered to those which include that branch_label.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">반환:</th><td class="field-body">a string revision number.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">더 보기</p>
+<p class="last"><a class="reference internal" href="#alembic.script.ScriptDirectory.get_heads" title="alembic.script.ScriptDirectory.get_heads"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ScriptDirectory.get_heads()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.revision.RevisionMap.get_revision">
+<code class="descname">get_revision</code><span class="sig-paren">(</span><em>id_</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.revision.RevisionMap.get_revision" title="정의 주소">¶</a></dt>
+<dd><p>Return the <a class="reference internal" href="#alembic.script.revision.Revision" title="alembic.script.revision.Revision"><code class="xref py py-class docutils literal notranslate"><span class="pre">Revision</span></code></a> instance with the given rev id.</p>
+<p>If a symbolic name such as &quot;head&quot; or &quot;base&quot; is given, resolves
+the identifier into the current head or base revision.  If the symbolic
+name refers to multiples, <a class="reference internal" href="#alembic.script.revision.MultipleHeads" title="alembic.script.revision.MultipleHeads"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleHeads</span></code></a> is raised.</p>
+<p>Supports partial identifiers, where the given identifier
+is matched against all identifiers that start with the given
+characters; if there is exactly one match, that determines the
+full revision.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.revision.RevisionMap.get_revisions">
+<code class="descname">get_revisions</code><span class="sig-paren">(</span><em>id_</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.revision.RevisionMap.get_revisions" title="정의 주소">¶</a></dt>
+<dd><p>Return the <a class="reference internal" href="#alembic.script.revision.Revision" title="alembic.script.revision.Revision"><code class="xref py py-class docutils literal notranslate"><span class="pre">Revision</span></code></a> instances with the given rev id
+or identifiers.</p>
+<p>May be given a single identifier, a sequence of identifiers, or the
+special symbols &quot;head&quot; or &quot;base&quot;.  The result is a tuple of one
+or more identifiers, or an empty tuple in the case of &quot;base&quot;.</p>
+<p>In the cases where 'head', 'heads' is requested and the
+revision map is empty, returns an empty tuple.</p>
+<p>Supports partial identifiers, where the given identifier
+is matched against all identifiers that start with the given
+characters; if there is exactly one match, that determines the
+full revision.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="alembic.script.revision.RevisionMap.heads">
+<code class="descname">heads</code><a class="headerlink" href="#alembic.script.revision.RevisionMap.heads" title="정의 주소">¶</a></dt>
+<dd><p>All &quot;head&quot; revisions as strings.</p>
+<p>This is normally a tuple of length one,
+unless unmerged branches are present.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">반환:</th><td class="field-body">a tuple of string revision numbers.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alembic.script.revision.RevisionMap.iterate_revisions">
+<code class="descname">iterate_revisions</code><span class="sig-paren">(</span><em>upper</em>, <em>lower</em>, <em>implicit_base=False</em>, <em>inclusive=False</em>, <em>assert_relative_length=True</em>, <em>select_for_downgrade=False</em><span class="sig-paren">)</span><a class="headerlink" href="#alembic.script.revision.RevisionMap.iterate_revisions" title="정의 주소">¶</a></dt>
+<dd><p>Iterate through script revisions, starting at the given
+upper revision identifier and ending at the lower.</p>
+<p>The traversal uses strictly the <cite>down_revision</cite>
+marker inside each migration script, so
+it is a requirement that upper &gt;= lower,
+else you'll get nothing back.</p>
+<p>The iterator yields <a class="reference internal" href="#alembic.script.revision.Revision" title="alembic.script.revision.Revision"><code class="xref py py-class docutils literal notranslate"><span class="pre">Revision</span></code></a> objects.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Script Directory</a><ul>
+<li><a class="reference internal" href="#revision">Revision</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>빠른 검색</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="바로 가기" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="autogenerate.html"
+                        title="이전 장">Autogeneration</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="ddl.html"
+                        title="다음 장">DDL Internals</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="ddl.html" title="DDL Internals"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="autogenerate.html" title="Autogeneration"
+             >이전</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Alembic 1.0.8 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API Details</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2010-2019, Mike Bayer.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
